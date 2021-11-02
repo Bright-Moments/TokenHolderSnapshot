@@ -7,7 +7,10 @@
 import os
 import json
 import csv
+import time
 
+current_time = time.time()
+current_time_formatted = time.ctime(current_time)
 os.environ['WEB3_INFURA_PROJECT_ID'] = '' #infura project id
 os.environ['WEB3_INFURA_API_SECRET']= '' #infura secret id
 
@@ -16,6 +19,7 @@ from ens import ENS
 
 print(w3.isConnected()) # check connection
 ns = ENS.fromWeb3(w3) # set provider as Infura
+blockheight = w3.eth.get_block('latest')
 
 """Art Blocks"""
 # ENS Registry smart contract application binary interface (ABI) 
@@ -60,12 +64,18 @@ owners_output = []
 i = 0
 for owner in owners:
   array = []
+  array.append(i+1)
   array.append(owner)
   array.append(tokenIDs[i])
   owners_output.append(array)
   i += 1
 
+blockheightAndTimeRow = []
+blockheightAndTimeRow.append(current_time_formatted)
+blockheightAndTimeRow.append(blockheight)
+
 
 with open('snapshot.csv', 'wt') as f:
   writer = csv.writer(f)
   writer.writerows(owners_output)
+  writer.writerow(blockheightAndTimeRow)

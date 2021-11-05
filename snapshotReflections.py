@@ -41,11 +41,6 @@ for i in range(95000000,95000691, 1):
 for i in range(189000000, 189000436, 1):
   tokenids.append(i)
 
-# Minted Fidenzas
-# tokenids = []
-# for i in range(78000000,78000999,1):
-#  tokenids.append(i)
-
 print(tokenids)
 
 owners = []
